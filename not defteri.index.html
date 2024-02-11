@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Taking App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .note-form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .note-text {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
+        .note-submit {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .note-submit:hover {
+            background-color: #45a049;
+        }
+        .note-list {
+            list-style: none;
+            padding: 0;
+        }
+        .note {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .delete-note {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Note Taking App</h1>
+    </header>
+    <div class="container">
+        <form class="note-form">
+            <textarea id="note-text" class="note-text" placeholder="Enter your note here..."></textarea>
+            <button type="submit" class="note-submit">Add Note</button>
+        </form>
+        <ul class="note-list">
+            <!-- Notes will be dynamically added here -->
+        </ul>
+    </div>
+    
+    <script>
+        // Function to delete a note
+        function deleteNote() {
+            const listItem = this.parentElement;
+            listItem.remove();
+        }
+
+        document.querySelector('.note-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const noteText = document.getElementById('note-text').value.trim();
+            if (noteText !== '') {
+                const noteItem = document.createElement('li');
+                noteItem.classList.add('note');
+                noteItem.innerHTML = `
+                    <span>${noteText}</span>
+                    <button class="delete-note">X</button>
+                `;
+                noteItem.querySelector('.delete-note').addEventListener('click', deleteNote);
+                document.querySelector('.note-list').appendChild(noteItem);
+                document.getElementById('note-text').value = '';
+            }
+        });
+    </script>
+</body>
+</html>
